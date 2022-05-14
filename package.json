@@ -1,0 +1,25 @@
+{
+  "name": "vong_co_cho_pet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LeVietHa05/vong_co_cho_pet.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LeVietHa05/vong_co_cho_pet/issues"
+  },
+  "homepage": "https://github.com/LeVietHa05/vong_co_cho_pet#readme",
+  "dependencies": {
+    "express": "^4.18.1",
+    "ip": "^1.1.8",
+    "socket.io": "^4.5.0"
+  }
+}
