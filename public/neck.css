@@ -78,3 +78,16 @@ body{
     width: 370px;
     padding: 5px;
 }
+#googleMap{
+    margin:30px 0 0 10px
+}
+.btn-door{
+    margin-top: 10px;
+    margin-left: 10px;
+    width: 150px;
+    height: 30px;
+}
+.btn-door:hover{
+    background-color: aqua;
+    cursor: pointer;
+}
