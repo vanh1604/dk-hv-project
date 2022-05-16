@@ -42,7 +42,7 @@
         <div class="main-right-filter">
             <input type="text" placeholder="Filter" class="filter">
         </div>
-        <button class="btn-door" id="servo_btn">ope the door</button>
+        <button class="btn-door" id="servo_btn">OPEN THE DOOR</button>
 
     </div>
 </section>
@@ -72,11 +72,15 @@
 </script>
 <script>
     function myMap() {
-        const mapProp= {
+        const mapProp1= {
             center:new google.maps.LatLng(20.99861496637506, 105.85524747787383),
             zoom:15,
         };
-        const map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+        const mapProp2= {
+            center:new google.maps.LatLng(21.99861496637506, 107.85524747787383),
+            zoom:15,
+        };
+        const map = new google.maps.Map(document.getElementById("googleMap"),mapProp1, mapProp2);
     }
 </script>
 
