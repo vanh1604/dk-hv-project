@@ -65,7 +65,7 @@ io.on('connection', function(socket) {
     }, 5000)//5000ms
 
     /*event handler cho esp client*/
-    //led status
+    //led status, cai nay co the bo di
     socket.on('LED_STATUS', function(message) {
         broadcast(socket, message); //gui lai thong tin ve cho web client
         console.log("LED: ", message.message);  //log
@@ -75,7 +75,7 @@ io.on('connection', function(socket) {
         broadcast(socket, message); //gui lai thong tin ve cho web client
         console.log("MQ2: ", message.message)
     })
-    //button
+    //button    //cai nay cung co the bo di
     let pressed = 0;
     socket.on('BTN', (data)=> {
         pressed ++;
@@ -88,11 +88,25 @@ io.on('connection', function(socket) {
         broadcast(socket, message); //gui lai thong tin ve cho web client
         console.log(message.message)
     })
+    //cam bien than nhiet
+    socket.on('MAX30100', (message) => {
+        broadcast(socket, message); //gui lai thong tin ve cho web client
+        console.log(message.message);
+    })
+    //cam bien C0
+    socket.on('CO', (message) => {
+        broadcast(socket, message); //gui lai thong tin ve cho web client
+        console.log(message.message);
+    })
+    socket.on('SP02', (message) => {
+        broadcast(socket, message); //gui lai thong tin ve cho web client
+        console.log(message.message);
+    })
 
     /*event handler cho web client*/
     socket.on('msg', function (data) {
         console.log(data);
-        broadcast(socket, data)
+        broadcast(socket, data);
     });
     socket.on('disconnect', function (data) {
         let index = clients.indexOf(socket);
