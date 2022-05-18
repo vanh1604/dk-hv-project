@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="neck.css">
+    <title>necklace</title>
+</head>
+<body>
+<section class="navbar">
+    <div class="logo">
+        <img src="https://petviet.vn/wp-content/uploads/2019/04/vong-co-gai-cho-cho-1.jpg" alt="" class="img">
+    </div>
+    <div class="navbar-info">
+        <nav class="navbar-item">
+            <a class="navbar-item-link" href="">Home</a>
+            <a class="navbar-item-link" href="">Dữ Liệu</a>
+            <a class="navbar-item-link" href="">About</a>
+        </nav>
+        <input type="text" id="Search" placeholder="Search">
+        <button class="btn">Search</button>
+    </div>
+
+</section>
+<section class="main">
+    <div class="main-left">
+        <div class="flex-box">
+            <div class="total box">Total Device <br>
+                <div id="totalNum" class="number">0</div>
+            </div>
+            <div class="working box">Working Device <br>
+                <div id="workingNum" class="number">0</div>
+            </div>
+            <div class="alert box">Alert Device <br>
+                <div id="alertNum" class="number">0</div>
+            </div>
+        </div>
+        <div id="googleMap" style="width:940px;height:704px;"></div>
+    </div>
+    <div class="main-right">
+        <div class="main-right-filter">
+            <input type="text" placeholder="Filter" class="filter">
+        </div>
+        <button class="btn-door" id="servo_btn">ope the door</button>
+
+    </div>
+</section>
+<script src="socket.io.js"></script>
+<script>
+    const totalNum = document.getElementById('totalNum');
+    const workingNum = document.getElementById('workingNum');
+    const alertNum = document.getElementById('alertNum');
+    const servo_btn = document.getElementById('servo_btn');
+    const socket = io();
+    socket.on('totalDevice', (data) => {
+        totalNum.innerText = `${data}`;
+    })
+    servo_btn.addEventListener('click', () => {
+        console.log('click')
+        if (servo_btn.textContent === "OPEN THE DOOR") {
+            servo_btn.textContent = "CLOSE THE DOOR";
+            servo_btn.style.color ='red'
+            socket.emit('msg', "MO_CONG");
+        } else {
+            servo_btn.textContent = "OPEN THE DOOR";
+            servo_btn.style.color ='green'
+            socket.emit('msg', "DONG_CONG");
+        }
+    })
+
+</script>
+<script>
+    function myMap() {
+        const mapProp= {
+            center:new google.maps.LatLng(20.99861496637506, 105.85524747787383),
+            zoom:15,
+        };
+        const map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+    }
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmRAp1Vw0nUZIuwShewL3NHEu_MO52Wc8&callback=myMap"></script>
+</body>
+</html>

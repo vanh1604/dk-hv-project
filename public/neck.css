@@ -12,7 +12,7 @@ body{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: aqua;
+    color: black;
     background-color: #F1F1F1;
 }
 .img{
@@ -26,7 +26,7 @@ body{
 .navbar-item-link{
     margin: 0 10px;
     text-decoration: none;
-    color: aqua;
+    color: black;
 }
 #Search{
     height: 20px;
@@ -35,12 +35,16 @@ body{
 .btn{
     height: 20px;
     padding: 2px;
-    border: solid 1px aquamarine;
+    border: solid 1px black;
     border-radius: 5px;
-    color: aqua;
+    color: black;
     cursor: pointer;
 }
 /* section:main */
+.flex-box{
+    display: flex;
+    justify-content: space-around;
+}
 .box{
     width: 300px;
     height:115px ;
@@ -53,8 +57,7 @@ body{
 }
 .main-left{
     margin-top: 10px;
-    display: flex;
-    justify-content: space-around;
+
 }
 .total{
     background-color: blue;
@@ -74,4 +77,17 @@ body{
     margin-left: 10px;
     width: 370px;
     padding: 5px;
+}
+#googleMap{
+    margin:30px 0 0 10px
+}
+.btn-door{
+    margin-top: 10px;
+    margin-left: 10px;
+    width: 150px;
+    height: 30px;
+}
+.btn-door:hover{
+    background-color: aqua;
+    cursor: pointer;
 }
