@@ -75,7 +75,7 @@ body{
 .filter{
     margin-top: 10px;
     margin-left: 10px;
-    width: 370px;
+    width: 100%;
     padding: 5px;
 }
 #googleMap{
@@ -90,4 +90,35 @@ body{
 .btn-door:hover{
     background-color: aqua;
     cursor: pointer;
+}
+.main-right-filter{
+    display: flex;
+}
+.main-content{
+    margin-top: 74px;
+}
+.search{
+    margin-left: 10px;
+    height: 30px;
+    margin-top: 10px;
+}
+.mq2{
+    background-color: #E14711;
+    margin: 10px 0;
+}
+.HCSR501{
+    background-color: #F3B80D;
+    margin: 10px 0;
+}
+.heat{
+    background-color: #8EF30D ;
+    margin: 10px 0;
+}
+.C0{
+    background-color: #0DF353;
+    margin: 10px 0;
+}
+.SPO2{
+    background-color: #0DA7F3;
+    margin: 10px 0 ;
 }

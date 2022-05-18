@@ -98,6 +98,7 @@ io.on('connection', function(socket) {
         broadcast(socket, message); //gui lai thong tin ve cho web client
         console.log(message.message);
     })
+    //SPO2
     socket.on('SP02', (message) => {
         broadcast(socket, message); //gui lai thong tin ve cho web client
         console.log(message.message);
