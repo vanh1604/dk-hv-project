@@ -122,3 +122,17 @@ body{
     background-color: #0DA7F3;
     margin: 10px 0 ;
 }
+.btn-lightbulb{
+    margin-top: 10px;
+    margin-left: 10px;
+    width: 70px;
+    height: 30px;
+    cursor: pointer;
+}
+.fa-lightbulb{
+    font-size: 0.9rem;
+}
+.btn-lightbulb:hover{
+    color: #0DF353;
+    background-color: red;
+}
