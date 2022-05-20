@@ -91,6 +91,9 @@ body{
     background-color: aqua;
     cursor: pointer;
 }
+.main-right{
+
+}
 .main-right-filter{
     display: flex;
 }
@@ -132,7 +135,4 @@ body{
 .fa-lightbulb{
     font-size: 0.9rem;
 }
-.btn-lightbulb:hover{
-    color: #0DF353;
-    background-color: red;
-}
+

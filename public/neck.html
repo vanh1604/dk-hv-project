@@ -48,57 +48,117 @@
       <div class="main-right">
         <div class="main-right-filter">
           <input type="text" placeholder="Filter" class="filter" />
-          <button class="search">Search</button>
+          <button class="search" id="search_btn">Search</button>
         </div>
         <button class="btn-door" id="servo_btn">OPEN THE DOOR</button>
-        <button class="btn-lightbulb"><i class="fa-regular fa-lightbulb"></i></button>
+        <button class="btn-lightbulb" id="led"><i class="fa-regular fa-lightbulb"></i></button>
         <div class="main-content">
-            <div class="box mq2">
+            <div class="box mq2" >
                 Chỉ số gas <br />
-                <div class="number">0</div>
+                <div class="number" id="MQ2">0</div>
               </div>
-              <div class="box HCSR501">
-                  Chỉ số HCSR501 <br />
-                  <div class="number">0</div>
+              <div class="box HCSR501" >
+                  Cảm biến chuyển động <br />
+                  <div class="text" id="HCSR501">Không chuyển động</div>
                 </div>
-                <div class="box heat">
-                  Chỉ số cảm biến thân nhiệt <br />
-                  <div class="number">0</div>
+                <div class="box heat" >
+                  Cảm biến thân nhiệt <br />
+                  <div class="number" id="MAX30100">0</div>
                 </div>
-                <div class="box C0">
+                <div class="box C0" >
                   Chỉ số cảm biến C0 <br />
-                  <div class="number">0</div>
+                  <div class="number" id="CO">0</div>
                 </div>
                 <div class="box SPO2">
                   Chỉ số SPO2 <br />
-                  <div class="number">0</div>
+                  <div class="number" id="SPO2">0</div>
         </div>
           </div>
       </div>
     </section>
     <script src="socket.io.js"></script>
+<!--    socket -->
     <script>
       const totalNum = document.getElementById("totalNum");
-      const workingNum = document.getElementById("workingNum");
-      const alertNum = document.getElementById("alertNum");
+      // const workingNum = document.getElementById("workingNum");
+      // const alertNum = document.getElementById("alertNum");
       const servo_btn = document.getElementById("servo_btn");
+      const MQ2 = document.getElementById('MQ2');
+      const MAX30100 = document.getElementById('MAX30100');
+      const CO = document.getElementById('CO');
+      const SPO2 = document.getElementById('SPO2');
+      const HCSR501 = document.getElementById('HCSR501');
+      const led = document.getElementById('led')
+      const search_btn = document.getElementById('search_btn');
+
       const socket = io();
+
+
+      //cap nhat toan bo thong tin
+      search_btn.addEventListener('click', ()=>{
+        socket.emit('UPDATE', 'just update')
+      })
+      //cap nhat so luong thiet bi ket noi
       socket.on("totalDevice", (data) => {
         totalNum.innerText = `${data}`;
       });
+      //chi so gas
+      socket.on("MQ2", (data)=> {
+        MQ2.innerText = data;
+      })
+      //cam bien chuyen dong
+      socket.on("HCSR501", (data)=> {
+        if (data === 'MOTION_DETECTED') {
+          HCSR501.innerText = 'Phat hien chuyen dong';
+        } else HCSR501.innerText = 'khong co chuyen dong'
+      })
+      //cam bien than nhiet
+      socket.on('MAX30100', (data) => {
+        MAX30100.innerText = data;
+      })
+      //cam bien CO
+      socket.on('CO', (data) => {
+        CO.innerText = data;
+      })
+      //chi so SPO2
+      socket.on('SPO2',(data) => {
+        SPO2.innerText = data;
+      })
+      //led
+      socket.on('LED', (data) => {
+        if (data === 'ON') {led.style.backgroundColor = "red"}
+        else if (data=== 'OFF') led.style.backgroundColor = "white"
+      })
+      led.addEventListener("click", ()=> {
+        if (led.style.backgroundColor === "red") {
+          led.style.backgroundColor = "white";
+          socket.emit("LED", "OFF");
+        } else {
+          led.style.backgroundColor = "red";
+          socket.emit("LED", "ON");
+        }
+      })
+
+      //dong/mo cong
+      socket.on('msg', (data) =>{
+        if (data === 'MO_CONG') {
+          servo_btn.textContent = "CLOSE THE DOOR";
+        } else servo_btn.textContent = "OPEN THE DOOR";
+      })
       servo_btn.addEventListener("click", () => {
         console.log("click");
         if (servo_btn.textContent === "OPEN THE DOOR") {
           servo_btn.textContent = "CLOSE THE DOOR";
-          servo_btn.style.color = "red";
+          // servo_btn.style.color = "red";
           socket.emit("msg", "MO_CONG");
         } else {
           servo_btn.textContent = "OPEN THE DOOR";
-          servo_btn.style.color = "green";
+          // servo_btn.style.color = "green";
           socket.emit("msg", "DONG_CONG");
         }
       });
     </script>
+<!-- google map   -->
     <script>
       function myMap() {
         const mapProp1 = {
@@ -116,7 +176,6 @@
         );
       }
     </script>
-
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmRAp1Vw0nUZIuwShewL3NHEu_MO52Wc8&callback=myMap"></script>
   </body>
 </html>
