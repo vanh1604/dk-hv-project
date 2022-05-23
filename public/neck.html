@@ -76,7 +76,8 @@
           </div>
       </div>
     </section>
-    <script src="socket.io.js"></script>
+<!--    <script src="socket.io.js"></script>-->
+    <script src="/socket.io/socket.io.js"></script>
 <!--    socket -->
     <script>
       const totalNum = document.getElementById("totalNum");
@@ -95,6 +96,9 @@
 
 
       //cap nhat toan bo thong tin
+      socket.on("BTN", (data) => {
+        socket.emit('UPDATE', 'just update')
+      })
       search_btn.addEventListener('click', ()=>{
         socket.emit('UPDATE', 'just update')
       })
@@ -104,11 +108,11 @@
       });
       //chi so gas
       socket.on("MQ2", (data)=> {
-        MQ2.innerText = data;
+        MQ2.innerText = data.MQ2;
       })
       //cam bien chuyen dong
       socket.on("HCSR501", (data)=> {
-        if (data === 'MOTION_DETECTED') {
+        if (data.message === 'MOTION_DETECTED') {
           HCSR501.innerText = 'Phat hien chuyen dong';
         } else HCSR501.innerText = 'khong co chuyen dong'
       })
@@ -125,9 +129,9 @@
         SPO2.innerText = data;
       })
       //led
-      socket.on('LED', (data) => {
-        if (data === 'ON') {led.style.backgroundColor = "red"}
-        else if (data=== 'OFF') led.style.backgroundColor = "white"
+      socket.on('LED_STATUS', (data) => {
+        if (data.message === 'ON') {led.style.backgroundColor = "red"}
+        else if (data.message === 'OFF') led.style.backgroundColor = "white"
       })
       led.addEventListener("click", ()=> {
         if (led.style.backgroundColor === "red") {
@@ -146,7 +150,6 @@
         } else servo_btn.textContent = "OPEN THE DOOR";
       })
       servo_btn.addEventListener("click", () => {
-        console.log("click");
         if (servo_btn.textContent === "OPEN THE DOOR") {
           servo_btn.textContent = "CLOSE THE DOOR";
           // servo_btn.style.color = "red";

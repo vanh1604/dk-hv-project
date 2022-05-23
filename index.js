@@ -2,32 +2,25 @@ const PORT = 3434;
 const express =require('express')
 const app = express();
 const http = require('http').createServer(app)
-// const server = app.listen(PORT);
-const socketIo = require('socket.io')
+const socketIo = require('socket.io')   //phai dung phien ban 1.7.3: <script src="/socket.io/socket.io.js"></script>
 const ip = require('ip');
+
 app.use(express.static(__dirname));
 app.use(express.static("public"));
 
-// let app = http.createServer();
-// let io = socketIo(http);
-let io = new socketIo.Server(http)
-// let io = socketIo(PORT);
-// io.attach(http, {
-//     pingInterval: 10000,
-//     pingTimeout: 5000,
-//     cookie: false
+let io = socketIo(http)
+
+
+http.listen(PORT);
+console.log("Server nodejs chay tai dia chi: " + ip.address() + ":" + PORT)
+// app.listen(PORT, () => {
+//     console.log("Server nodejs chay tai dia chi: " + ip.address() + ":" + PORT)
 // })
 
 app.get("/", (req, res) => {
     res.sendFile(__dirname + '/public/neck.html');
 })
-// app.listen();
-http.listen(PORT, () => {
-    console.log("Server nodejs chay tai dia chi: " + ip.address() + ":" + PORT)
-})
-// http.listen()
 
-// console.log("Server nodejs chay tai dia chi: " + ip.address() + ":" + PORT)
 
 /**
  * phan tich du lieu nhan duoc
@@ -73,19 +66,18 @@ io.on('connection', function(socket) {
         }
         socket.emit('LED', json) //Gửi lệnh LED với các tham số của của chuỗi JSON
         io.sockets.emit('MAX30100', Math.floor(Math.random()*2+37))
-        io.sockets.emit('MQ2', Math.floor(Math.random()*200 + 400))
     }, 5000)//5000ms
 
     /*event handler cho esp client*/
     //led status, cai nay co the bo di
     socket.on('LED_STATUS', function(message) {
         broadcast(socket, 'LED_STATUS', message); //gui lai thong tin ve cho web client
-        console.log("LED: ", message.message);  //log
+        console.log("LED thong tin tu esp: ", message.message);  //log
     });
     //chi so gas: mq2
     socket.on('MQ2', (message) => {
         broadcast(socket,'MQ2', message); //gui lai thong tin ve cho web client
-        console.log("MQ2: ", message.message)
+        console.log("MQ2: ", message.MQ2)
     })
     //button    //cai nay cung co the bo di
     socket.on('BTN', (message)=> {
@@ -122,9 +114,10 @@ io.on('connection', function(socket) {
         console.log(data);
         broadcast(socket, 'LED',data)
     })
-    socket.on('UPDATE', ()=> {
+    socket.on('UPDATE', (data)=> {
+        console.log('update')
+        broadcast(socket, 'UPDATE',data)
         io.sockets.emit('MAX30100', Math.floor(Math.random()*2+37))
-        io.sockets.emit('MQ2', Math.floor(Math.random()*200 + 400))
     })
 
 
