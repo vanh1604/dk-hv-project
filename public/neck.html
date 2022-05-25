@@ -9,27 +9,21 @@
     <title>necklace</title>
   </head>
   <body>
-    <section class="navbar">
-      <div class="logo">
-        <img
-          src="https://petviet.vn/wp-content/uploads/2019/04/vong-co-gai-cho-cho-1.jpg"
-          alt=""
-          class="img"
-        />
-      </div>
-      <div class="navbar-info">
-        <nav class="navbar-item">
-          <a class="navbar-item-link" href="">Home</a>
-          <a class="navbar-item-link" href="">Dữ Liệu</a>
-          <a class="navbar-item-link" href="">About</a>
-        </nav>
-        <input type="text" id="Search" placeholder="Search" />
-        <button class="btn">Search</button>
-      </div>
-    </section>
+    
+    
     <section class="main">
-      <div class="main-left">
-        <div class="flex-box">
+      <div class="above-btn">
+        <div class="search">
+          <input type="text" name="" id="" placeholder="Tìm kiếm">
+          <button></button>
+        </div>
+        <div class="control-btn">
+          <button class="" id="">UPDATE</button>
+          <button class="btn-door" id="servo_btn">OPEN THE DOOR</button>
+          <button class="btn-lightbulb" id="led"><i class="fa-regular fa-lightbulb"></i></button>
+        </div>
+      </div>
+        <!-- <div class="flex-box">
           <div class="total box">
             Total Device <br />
             <div id="totalNum" class="number">0</div>
@@ -42,10 +36,39 @@
             Alert Device <br />
             <div id="alertNum" class="number">0</div>
           </div>
+        </div> -->
+      <div id="googleMap"></div>
+      <div id="info">
+        <div class="total box ">
+          <div id="totalNum" class="number">0</div><br />
+          <div class="text">Tất cả thiết bị</div>
         </div>
-        <div id="googleMap" style="width: 940px; height: 704px"></div>
+        <div class="box mq2" >
+          <div class="number" id="MQ2">0</div>
+          <br />
+          <div class="text">Chỉ số gas</div> 
+        </div>
+        <div class="box HCSR501 ">
+          <div class="text-move" id="HCSR501">Không</div><br />
+          <div class="text">Cảm biến chuyển động</div> 
+        </div>
+        <div class="box heat" >
+          <div class="number" id="MAX30100">0</div><br />
+          <div class="text">Cảm biến thân nhiệt</div> 
+        </div>
+        <div class="box C0" >
+          <div class="number" id="CO">0</div>
+          <br />
+          <div class="text">Chỉ số cảm biến C0</div> 
+        </div>
+        <div class="box SPO2">
+          <div class="number" id="SPO2">0</div>
+          <br />
+          <div class="text">Chỉ số SPO2</div> 
+        </div>
       </div>
-      <div class="main-right">
+      
+      <!-- <div class="main-right">
         <div class="main-right-filter">
           <input type="text" placeholder="Filter" class="filter" />
           <button class="search" id="search_btn">Search</button>
@@ -73,7 +96,7 @@
                   Chỉ số SPO2 <br />
                   <div class="number" id="SPO2">0</div>
         </div>
-          </div>
+      </div> -->
       </div>
     </section>
 <!--    <script src="socket.io.js"></script>-->
@@ -99,9 +122,9 @@
       socket.on("BTN", (data) => {
         socket.emit('UPDATE', 'just update')
       })
-      search_btn.addEventListener('click', ()=>{
-        socket.emit('UPDATE', 'just update')
-      })
+      // search_btn.addEventListener('click', ()=>{
+      //   socket.emit('UPDATE', 'just update')
+      // })
       //cap nhat so luong thiet bi ket noi
       socket.on("totalDevice", (data) => {
         totalNum.innerText = `${data}`;
@@ -134,11 +157,11 @@
         else if (data.message === 'OFF') led.style.backgroundColor = "white"
       })
       led.addEventListener("click", ()=> {
-        if (led.style.backgroundColor === "red") {
+        if (led.style.backgroundColor === "aqua") {
           led.style.backgroundColor = "white";
           socket.emit("LED", "OFF");
         } else {
-          led.style.backgroundColor = "red";
+          led.style.backgroundColor = "aqua";
           socket.emit("LED", "ON");
         }
       })

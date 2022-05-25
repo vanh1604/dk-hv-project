@@ -1,12 +1,23 @@
+@font-face {
+    font-family: inter;
+    src: url(../assets/font/static/Inter-Medium.ttf);
+}
+@font-face {
+    font-family: inter;
+    src: url(../assets/font/static/Inter-Bold.ttf);
+    font-weight: Bold;
+}
+
+
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: inter;
 }
 body{
     color: black;
     font-size: 16px;
-    height: 100vh;
 }
 .navbar{
     display: flex;
@@ -46,31 +57,71 @@ body{
     justify-content: space-around;
 }
 .box{
-    width: 300px;
+    width: 400px;
     height:115px ;
     text-align: center;
-    margin: 0 10px;
+    margin: 10px 20px !important;
     font-weight: 500;
+    padding: 0px 10px;
+    border-radius: 20px;
+    box-shadow: 1px 1px 0px 2px #999999;
 }
 .main{
-    display: flex;
+    height: 100vh;
+    overflow: hidden;
+
 }
 .main-left{
     margin-top: 10px;
+    width: 100%;
+
 
 }
+
+.above-btn{
+    position: relative;
+    top: 100px;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between
+}
+
+.control-btn{
+    margin-right: 40px;
+}
+
+.control-btn button{
+    height: 50px;
+    width: 220px;
+    border-radius: 20px;
+    border-style: none;
+    margin-right: 36px;
+}
+
+.search input{
+    height: 50px;
+    width: 300px;
+    border-radius: 20px;
+    border-style: none;
+}
+
+::placeholder{
+    padding-left: 36px ;
+}
+
 .total{
-    background-color: blue;
+    background-color: white;
 }
 .working{
-    background-color: green;
+    background-color: white;
 }
 .alert{
-    background-color: red;
+    background-color: white;
 }
 .number{
     margin-top: 20px;
     font-size: 55px;
+    font-size: 28px;
 }
 .filter{
     margin-top: 10px;
@@ -79,8 +130,28 @@ body{
     padding: 5px;
 }
 #googleMap{
-    margin:30px 0 0 10px
+    margin:0;
+    height: 100%;
+    width: 100%;
 }
+.text-move{
+    margin-top : 20px;
+    font-size: 28px;
+}
+.text{
+
+}
+
+#info{
+    display: flex;
+    position: relative;
+    bottom: 320px;
+    z-index: 1;
+    margin-left: 10%;
+    width: 80%;
+
+}
+
 .btn-door{
     margin-top: 10px;
     margin-left: 10px;
@@ -88,7 +159,7 @@ body{
     height: 30px;
 }
 .btn-door:hover{
-    background-color: aqua;
+    background-color: white;
     cursor: pointer;
 }
 .main-right{
@@ -101,28 +172,28 @@ body{
     margin-top: 74px;
 }
 .search{
-    margin-left: 10px;
+    margin-left: 40px;
     height: 30px;
-    margin-top: 10px;
+    margin-top: 0px;
 }
 .mq2{
-    background-color: #E14711;
-    margin: 10px 0;
+    background-color: white;
+    margin: 10px 20px;
 }
 .HCSR501{
-    background-color: #F3B80D;
+    background-color: white;
     margin: 10px 0;
 }
 .heat{
-    background-color: #8EF30D ;
+    background-color: white ;
     margin: 10px 0;
 }
 .C0{
-    background-color: #0DF353;
+    background-color: white;
     margin: 10px 0;
 }
 .SPO2{
-    background-color: #0DA7F3;
+    background-color: white;
     margin: 10px 0 ;
 }
 .btn-lightbulb{
