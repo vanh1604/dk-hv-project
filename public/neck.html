@@ -18,7 +18,7 @@
           <button></button>
         </div>
         <div class="control-btn">
-          <button class="" id="">UPDATE</button>
+          <button class="" id="update_btn">UPDATE</button>
           <button class="btn-door" id="servo_btn">OPEN THE DOOR</button>
           <button class="btn-lightbulb" id="led"><i class="fa-regular fa-lightbulb"></i></button>
         </div>
@@ -97,7 +97,6 @@
                   <div class="number" id="SPO2">0</div>
         </div>
       </div> -->
-      </div>
     </section>
 <!--    <script src="socket.io.js"></script>-->
     <script src="/socket.io/socket.io.js"></script>
@@ -113,7 +112,7 @@
       const SPO2 = document.getElementById('SPO2');
       const HCSR501 = document.getElementById('HCSR501');
       const led = document.getElementById('led')
-      const search_btn = document.getElementById('search_btn');
+      const update_btn = document.getElementById('update_btn');
 
       const socket = io();
 
@@ -122,9 +121,9 @@
       socket.on("BTN", (data) => {
         socket.emit('UPDATE', 'just update')
       })
-      // search_btn.addEventListener('click', ()=>{
-      //   socket.emit('UPDATE', 'just update')
-      // })
+      update_btn.addEventListener('click', ()=>{
+        socket.emit('UPDATE', ' update')
+      })
       //cap nhat so luong thiet bi ket noi
       socket.on("totalDevice", (data) => {
         totalNum.innerText = `${data}`;
