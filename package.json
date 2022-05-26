@@ -18,8 +18,10 @@
   },
   "homepage": "https://github.com/LeVietHa05/vong_co_cho_pet#readme",
   "dependencies": {
+    "chart.js": "^3.8.0",
     "express": "^4.18.1",
     "ip": "^1.1.8",
+    "mongoose": "^6.3.4",
     "socket.io": "^1.7.3"
   }
 }

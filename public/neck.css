@@ -2,6 +2,7 @@
     font-family: inter;
     src: url(../assets/font/static/Inter-Medium.ttf);
 }
+
 @font-face {
     font-family: inter;
     src: url(../assets/font/static/Inter-Bold.ttf);
@@ -9,41 +10,48 @@
 }
 
 
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: inter;
 }
-body{
+
+body {
     color: black;
     font-size: 16px;
 }
-.navbar{
+
+.navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     color: black;
     background-color: #F1F1F1;
 }
-.img{
+
+.img {
     width: 100%;
     height: 100px;
 }
-.navbar-info{
+
+.navbar-info {
     display: flex;
     margin-right: 30px;
 }
-.navbar-item-link{
+
+.navbar-item-link {
     margin: 0 10px;
     text-decoration: none;
     color: black;
 }
-#Search{
+
+#Search {
     height: 20px;
     margin: 0 10px;
 }
-.btn{
+
+.btn {
     height: 20px;
     padding: 2px;
     border: solid 1px black;
@@ -51,14 +59,16 @@ body{
     color: black;
     cursor: pointer;
 }
+
 /* section:main */
-.flex-box{
+.flex-box {
     display: flex;
     justify-content: space-around;
 }
-.box{
+
+.box {
     width: 400px;
-    height:115px ;
+    height: 115px;
     text-align: center;
     margin: 10px 20px !important;
     font-weight: 500;
@@ -66,19 +76,21 @@ body{
     border-radius: 20px;
     box-shadow: 1px 1px 0px 2px #999999;
 }
-.main{
+
+.main {
     height: 100vh;
     overflow: hidden;
 
 }
-.main-left{
+
+.main-left {
     margin-top: 10px;
     width: 100%;
 
 
 }
 
-.above-btn{
+.above-btn {
     position: relative;
     top: 100px;
     z-index: 1;
@@ -86,11 +98,11 @@ body{
     justify-content: space-between
 }
 
-.control-btn{
+.control-btn {
     margin-right: 40px;
 }
 
-.control-btn button{
+.control-btn button {
     height: 50px;
     width: 220px;
     border-radius: 20px;
@@ -98,7 +110,7 @@ body{
     margin-right: 36px;
 }
 
-.search input{
+.search input {
     height: 50px;
     width: 300px;
     border-radius: 20px;
@@ -107,44 +119,51 @@ body{
     font-size: 24px;
 }
 
-::placeholder{
-    padding-left: 0px ;
+::placeholder {
+    padding-left: 0px;
 }
 
-.total{
+.total {
     background-color: white;
 }
-.working{
+
+.working {
     background-color: white;
 }
-.alert{
+
+.alert {
     background-color: white;
 }
-.number{
+
+.number {
     margin-top: 20px;
     font-size: 55px;
     font-size: 28px;
 }
-.filter{
+
+.filter {
     margin-top: 10px;
     margin-left: 10px;
     width: 100%;
     padding: 5px;
 }
-#googleMap{
-    margin:0;
+
+#googleMap {
+    margin: 0;
     height: 100%;
     width: 100%;
 }
-.text-move{
-    margin-top : 20px;
+
+.text-move {
+    margin-top: 20px;
     font-size: 28px;
 }
-.text{
+
+.text {
 
 }
 
-#info{
+#info {
     display: flex;
     position: relative;
     bottom: 200px;
@@ -154,58 +173,79 @@ body{
 
 }
 
-.btn-door{
+.btn-door {
     margin-top: 10px;
     margin-left: 10px;
     width: 150px;
     height: 30px;
 }
-.btn-door:hover{
+
+.btn-door:hover {
     background-color: white;
     cursor: pointer;
 }
-.main-right{
+
+.main-right {
 
 }
-.main-right-filter{
+
+.main-right-filter {
     display: flex;
 }
-.main-content{
+
+.main-content {
     margin-top: 74px;
 }
-.search{
+
+.search {
     margin-left: 40px;
     height: 30px;
     margin-top: 0px;
 }
-.mq2{
+
+.mq2 {
     background-color: white;
     margin: 10px 20px;
 }
-.HCSR501{
+
+.HCSR501 {
     background-color: white;
     margin: 10px 0;
 }
-.heat{
-    background-color: white ;
-    margin: 10px 0;
-}
-.C0{
+
+.heat {
     background-color: white;
     margin: 10px 0;
 }
-.SPO2{
+
+.C0 {
     background-color: white;
-    margin: 10px 0 ;
+    margin: 10px 0;
 }
-.btn-lightbulb{
+
+.SPO2 {
+    background-color: white;
+    margin: 10px 0;
+}
+
+.btn-lightbulb {
     margin-top: 10px;
     margin-left: 10px;
     width: 70px;
     height: 30px;
     cursor: pointer;
 }
-.fa-lightbulb{
+
+.fa-lightbulb {
     font-size: 0.9rem;
 }
 
+.chart {
+    margin-bottom: 500px;
+    position: absolute;
+    bottom: -350px;
+    background-color: #fff4f8;
+    width: 400px;
+    height: 400px;
+    margin-left: 450px;
+}
