@@ -247,5 +247,17 @@ body {
     background-color: #fff4f8;
     width: 400px;
     height: 400px;
-    margin-left: 450px;
+    display: none ;
+    margin-left: -110px;
+    border-radius: 16px;
+}
+
+.chart-click{
+    display: block;
+    margin-bottom: 500px;
+    position: absolute;
+    bottom: -350px;
+    background-color: #fff4f8;
+    width: 400px;
+    height: 400px;
 }

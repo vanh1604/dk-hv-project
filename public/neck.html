@@ -4,7 +4,8 @@
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script> -->
+    <script src="/node_modules/chart.js/dist/chart.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="stylesheet" href="neck.css"/>
     <title>necklace</title>
@@ -40,7 +41,7 @@
     </div> -->
     <div id="googleMap"></div>
     <div>
-        <canvas class="chart" id="myChart" height="400" width="400"></canvas>
+        
         <div id="info">
             <div class="total box ">
                 <div id="totalNum" class="number">0</div>
@@ -48,29 +49,37 @@
                 <div class="text">Tất cả thiết bị</div>
             </div>
             <div class="box mq2">
-                <div class="number" id="MQ2">0</div>
-                <br/>
-                <div class="text">Chỉ số gas</div>
+              <canvas class="chart" id="myChart" height="400" width="400"></canvas>
+                <div id="my">
+                  <div class="number" id="MQ2">0</div>
+                  <br/>
+                  <div class="text">Nhịp tim</div>
+                </div>
             </div>
-            <div class="box HCSR501 ">
-                <div class="text-move" id="HCSR501">Không</div>
-                <br/>
-                <div class="text">Cảm biến chuyển động</div>
-            </div>
+            
             <div class="box heat" onclick="toggleChart()">
-                <div class="number" id="MAX30100">0</div>
-                <br/>
-                <div class="text">Cảm biến thân nhiệt</div>
+              <canvas class="chart" id="tempChart" height="400" width="400"></canvas>
+                <div id="temp">
+                  <div class="number" id="MAX30100">0</div>
+                  <br/>
+                  <div class="text">Cảm biến thân nhiệt</div>
+                </div>
             </div>
             <div class="box C0">
-                <div class="number" id="CO">0</div>
-                <br/>
-                <div class="text">Chỉ số cảm biến C0</div>
+              <canvas class="chart" id="COChart" height="400" width="400"></canvas>
+                <div id="co">
+                  <div class="number" id="CO">0</div>
+                 <br/>
+                 <div class="text">Chỉ số cảm biến C0</div>
+                </div>
             </div>
             <div class="box SPO2">
-                <div class="number" id="SPO2">0</div>
-                <br/>
-                <div class="text">Chỉ số SPO2</div>
+              <canvas class="chart" id="spoChart" height="400" width="400"></canvas>
+                <div id="spo">
+                  <div class="number" id="SPO2">0</div>
+                 <br/>
+                 <div class="text">Chỉ số SPO2</div>
+                </div>
             </div>
         </div>
     </div>
@@ -120,6 +129,14 @@
     const HCSR501 = document.getElementById('HCSR501');
     const led = document.getElementById('led')
     const update_btn = document.getElementById('update_btn');
+    const myChart1  = document.getElementById('my');
+    const tempChart1 = document.getElementById('temp');
+    const coChart1 = document.getElementById('CO');
+    const spoChart1 = document.getElementById('spo');
+    
+
+
+
 
     const socket = io();
 
@@ -190,6 +207,7 @@
             socket.emit("msg", "DONG_CONG");
         }
     });
+    
 </script>
 <!-- google map   -->
 <script>
@@ -208,18 +226,88 @@
             mapProp2
         );
     }
+
+    const my1 = document.getElementById('myChart');
+    console.log(my1);
+    myChart1.addEventListener("click", () => {
+      if(my1.style.display === 'none'){
+        my1.style.display ='block';
+        temp1.style.display = 'none';
+        co1.style.display = 'none';
+        spo1.style.display = 'none'
+      }else{
+        my1.style.display = 'none';
+      }
+    });
+    const temp1 = document.getElementById('tempChart');
+    console.log(temp1);
+    tempChart1.addEventListener("click", () => {
+      if(temp1.style.display === 'none'){
+        temp1.style.display ='block';
+        co1.style.display = 'none';
+        spo1.style.display = 'none';
+        my1.style.display = 'none';
+      }else{
+        temp1.style.display = 'none';
+      }
+    });
+    const co1 = document.getElementById('COChart');
+    console.log(co1);
+    coChart1.addEventListener("click", () => {
+      if(co1.style.display === 'none'){
+        co1.style.display ='block';
+        temp1.style.display = 'none';
+        spo1.style.display = 'none';
+        my1.style.display = 'none';
+      }else{
+        co1.style.display = 'none';
+      }
+    });
+    const spo1 = document.getElementById('spoChart');
+    console.log(spo1);
+    spoChart1.addEventListener("click", () => {
+      if(spo1.style.display === 'none'){
+        spo1.style.display ='block';
+        temp1.style.display = 'none';
+        co1.style.display = 'none';
+        my1.style.display = 'none';
+      }else{
+        spo1.style.display = 'none';
+      }
+    });
+ //animation
+const Goup = [ 
+  { transform: 'translateY(300px)' },
+  { transform: 'translateY(00px)' }
+];
+
+const Gouptiming = {
+  duration: 1000,
+  iterations: 1
+}
+
+
+  myChart1.addEventListener('click', () => {
+  my1.animate(Goup, Gouptiming)});
+  tempChart1.addEventListener('click', () => {
+  temp1.animate(Goup, Gouptiming)});
+  coChart1.addEventListener('click', () => {
+  co1.animate(Goup, Gouptiming)});
+  spoChart1.addEventListener('click', () => {
+  spo1.animate(Goup, Gouptiming)});
+ //animation
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmRAp1Vw0nUZIuwShewL3NHEu_MO52Wc8&callback=myMap"></script>
 <!--  chart them cai script o head la duoc-->
 <script>
-    const ctx = document.getElementById('myChart').getContext('2d');
-    const myChart = new Chart(ctx, {
-        type: 'bar',
+    const my = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(my, {
+        type: 'line',
         data: {
             labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
             datasets: [{
                 label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
+                data: [12, 19, 3, 5, 10, 3],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
@@ -248,6 +336,186 @@
             // }
         }
     });
+    const temp = document.getElementById('tempChart').getContext('2d');
+    const tempChart = new Chart(temp, {
+        type: 'line',
+        data: {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 10, 3],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: false
+            // scales: {
+            //     y: {
+            //         beginAtZero: true
+            //     }
+            // }
+        }
+    });
+    const spo = document.getElementById('spoChart').getContext('2d');
+    const spoChart = new Chart(spo, {
+        type: 'line',
+        data: {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 10, 3],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: false
+            // scales: {
+            //     y: {
+            //         beginAtZero: true
+            //     }
+            // }
+        }
+    });
+    const co = document.getElementById('COChart').getContext('2d');
+    const COChart = new Chart(co, {
+        type: 'line',
+        data: {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 10, 3],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: false
+            // scales: {
+            //     y: {
+            //         beginAtZero: true
+            //     }
+            // }
+        }
+    });
+    // const ctx = document.getElementById('Chart').getContext('2d');
+    // const myChart = new Chart(ctx, {
+    //     type: 'bar',
+    //     data: {
+    //         labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    //         datasets: [{
+    //             label: '# of Votes',
+    //             data: [12, 19, 3, 5, 10, 3],
+    //             backgroundColor: [
+    //                 'rgba(255, 99, 132, 0.2)',
+    //                 'rgba(54, 162, 235, 0.2)',
+    //                 'rgba(255, 206, 86, 0.2)',
+    //                 'rgba(75, 192, 192, 0.2)',
+    //                 'rgba(153, 102, 255, 0.2)',
+    //                 'rgba(255, 159, 64, 0.2)'
+    //             ],
+    //             borderColor: [
+    //                 'rgba(255, 99, 132, 1)',
+    //                 'rgba(54, 162, 235, 1)',
+    //                 'rgba(255, 206, 86, 1)',
+    //                 'rgba(75, 192, 192, 1)',
+    //                 'rgba(153, 102, 255, 1)',
+    //                 'rgba(255, 159, 64, 1)'
+    //             ],
+    //             borderWidth: 1
+    //         }]
+    //     },
+    //     options: {
+    //         responsive: false
+    //         // scales: {
+    //         //     y: {
+    //         //         beginAtZero: true
+    //         //     }
+    //         // }
+    //     }
+    // });
+    // const ctx = document.getElementById('myChart').getContext('2d');
+    // const myChart = new Chart(ctx, {
+    //     type: 'bar',
+    //     data: {
+    //         labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    //         datasets: [{
+    //             label: '# of Votes',
+    //             data: [12, 19, 3, 5, 10, 3],
+    //             backgroundColor: [
+    //                 'rgba(255, 99, 132, 0.2)',
+    //                 'rgba(54, 162, 235, 0.2)',
+    //                 'rgba(255, 206, 86, 0.2)',
+    //                 'rgba(75, 192, 192, 0.2)',
+    //                 'rgba(153, 102, 255, 0.2)',
+    //                 'rgba(255, 159, 64, 0.2)'
+    //             ],
+    //             borderColor: [
+    //                 'rgba(255, 99, 132, 1)',
+    //                 'rgba(54, 162, 235, 1)',
+    //                 'rgba(255, 206, 86, 1)',
+    //                 'rgba(75, 192, 192, 1)',
+    //                 'rgba(153, 102, 255, 1)',
+    //                 'rgba(255, 159, 64, 1)'
+    //             ],
+    //             borderWidth: 1
+    //         }]
+    //     },
+    //     options: {
+    //         responsive: false
+    //         // scales: {
+    //         //     y: {
+    //         //         beginAtZero: true
+    //         //     }
+    //         // }
+    //     }
+    // });
 </script>
 </body>
 </html>
