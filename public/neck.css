@@ -110,6 +110,9 @@ body {
     margin-right: 36px;
 }
 
+.update_btn {
+    cursor: pointer;
+}
 .search input {
     height: 50px;
     width: 300px;
@@ -203,29 +206,28 @@ body {
     margin-top: 0px;
 }
 
-.mq2 {
+.heart {
     background-color: white;
     margin: 10px 20px;
-}
-
-.HCSR501 {
-    background-color: white;
-    margin: 10px 0;
+    cursor: pointer;
 }
 
 .heat {
     background-color: white;
     margin: 10px 0;
+    cursor: pointer;
 }
 
 .C0 {
     background-color: white;
     margin: 10px 0;
+    cursor: pointer;
 }
 
 .SPO2 {
     background-color: white;
     margin: 10px 0;
+    cursor: pointer;
 }
 
 .btn-lightbulb {
