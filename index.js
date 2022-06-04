@@ -60,22 +60,22 @@ io.on('connection', function (socket) {
     //cam bien C0
     socket.on('CO', (message) => {
         broadcast(socket, 'CO', message); //gui lai thong tin ve cho web client
-        console.log(message.message);
+        console.log(`cam bien CO: ${message.message}`);
     })
     //OXY
     socket.on('OXY', (message) => {
         broadcast(socket, 'OXY', message); //gui lai thong tin ve cho web client
-        console.log(message.message);
+        console.log(`chi so OXY ${message.message}`);
     })
     //cam bien nhip tim
     socket.on('NHIP_TIM', (message) => {
         broadcast(socket, 'NHIP_TIM', message);
-        console.log(message.message);
+        console.log(`heart rate: ${message.message}`);
     })
     //cam bien nhiet do
     socket.on('NHIET_DO', (message) => {
         broadcast(socket, 'NHIET_DO', message);
-        console.log(message.message);
+        console.log(`nhiet do: ${message.message}`);
     })
 
     /*event handler cho web client*/
