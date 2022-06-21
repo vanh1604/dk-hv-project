@@ -52,7 +52,7 @@ function broadcast(socket, event, data) {
 
 //Khi có mệt kết nối được tạo giữa Socket Client và Socket Server
 io.on('connection', function (socket) {
-    console.log("Connected");
+    console.log(`${socket} Connected`);
     clients.push(socket);   //them client vao danh sach client dang ket noi
     io.sockets.emit('totalDevice', clients.length); //cap nhat so luong client
 
@@ -76,6 +76,16 @@ io.on('connection', function (socket) {
     socket.on('NHIET_DO', (message) => {
         broadcast(socket, 'NHIET_DO', message);
         console.log(`nhiet do: ${message.message}`);
+    })
+    //kinh do
+    socket.on('LNG', (message)=> {
+        broadcast(socket, 'LNG', message);
+        console.log(`Kinh do: ${message.message}`);
+    })
+    //vi do
+    socket.on('LAT', (message)=> {
+        broadcast(socket, 'LAT', message);
+        console.log(`Vi do: ${message.message}`);
     })
 
     /*event handler cho web client*/

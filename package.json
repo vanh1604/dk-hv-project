@@ -1,7 +1,7 @@
 {
   "name": "vong_co_cho_pet",
   "version": "1.0.0",
-  "description": "",
+  "description": "- clone reposity này về\r - mở terminal, dẫn đến project\r - chạy lệnh npm i để cài đặt thư viện\r - chạy lệnh node index.js để chạy server\r - mở trình duyệt web, vào trang localhost:3434 hoặc 'ip:port'",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -22,6 +22,6 @@
     "express": "^4.18.1",
     "ip": "^1.1.8",
     "mongoose": "^6.3.4",
-    "socket.io": "^1.7.3"
+    "socket.io": "^1.7.4"
   }
 }
