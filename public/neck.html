@@ -1,122 +1,310 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <link rel="stylesheet" href="neck.css" />
+<head>
+    <meta charset="UTF-8"/>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script> -->
+    <!--    <script src="/node_modules/chart.js/dist/chart.min.js"></script>-->
+    <script src="node_modules/chart.js/dist/chart.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
+    <link href="neck.css" rel="stylesheet"/>
     <title>necklace</title>
-  </head>
-  <body>
-    <section class="navbar">
-      <div class="logo">
-        <img
-          src="https://petviet.vn/wp-content/uploads/2019/04/vong-co-gai-cho-cho-1.jpg"
-          alt=""
-          class="img"
-        />
-      </div>
-      <div class="navbar-info">
-        <nav class="navbar-item">
-          <a class="navbar-item-link" href="">Home</a>
-          <a class="navbar-item-link" href="">Dữ Liệu</a>
-          <a class="navbar-item-link" href="">About</a>
-        </nav>
-        <input type="text" id="Search" placeholder="Search" />
-        <button class="btn">Search</button>
-      </div>
-    </section>
-    <section class="main">
-      <div class="main-left">
-        <div class="flex-box">
-          <div class="total box">
-            Total Device <br />
-            <div id="totalNum" class="number">0</div>
-          </div>
-          <div class="working box">
-            Working Device <br />
-            <div id="workingNum" class="number">0</div>
-          </div>
-          <div class="alert box">
-            Alert Device <br />
-            <div id="alertNum" class="number">0</div>
-          </div>
-        </div>
-        <div id="googleMap" style="width: 940px; height: 704px"></div>
-      </div>
-      <div class="main-right">
-        <div class="main-right-filter">
-          <input type="text" placeholder="Filter" class="filter" />
-          <button class="search">Search</button>
-        </div>
-        <button class="btn-door" id="servo_btn">OPEN THE DOOR</button>
-        <button class="btn-lightbulb"><i class="fa-regular fa-lightbulb"></i></button>
-        <div class="main-content">
-            <div class="box mq2">
-                Chỉ số gas <br />
-                <div class="number">0</div>
-              </div>
-              <div class="box HCSR501">
-                  Chỉ số HCSR501 <br />
-                  <div class="number">0</div>
-                </div>
-                <div class="box heat">
-                  Chỉ số cảm biến thân nhiệt <br />
-                  <div class="number">0</div>
-                </div>
-                <div class="box C0">
-                  Chỉ số cảm biến C0 <br />
-                  <div class="number">0</div>
-                </div>
-                <div class="box SPO2">
-                  Chỉ số SPO2 <br />
-                  <div class="number">0</div>
-        </div>
-          </div>
-      </div>
-    </section>
-    <script src="socket.io.js"></script>
-    <script>
-      const totalNum = document.getElementById("totalNum");
-      const workingNum = document.getElementById("workingNum");
-      const alertNum = document.getElementById("alertNum");
-      const servo_btn = document.getElementById("servo_btn");
-      const socket = io();
-      socket.on("totalDevice", (data) => {
-        totalNum.innerText = `${data}`;
-      });
-      servo_btn.addEventListener("click", () => {
-        console.log("click");
-        if (servo_btn.textContent === "OPEN THE DOOR") {
-          servo_btn.textContent = "CLOSE THE DOOR";
-          servo_btn.style.color = "red";
-          socket.emit("msg", "MO_CONG");
-        } else {
-          servo_btn.textContent = "OPEN THE DOOR";
-          servo_btn.style.color = "green";
-          socket.emit("msg", "DONG_CONG");
-        }
-      });
-    </script>
-    <script>
-      function myMap() {
-        const mapProp1 = {
-          center: new google.maps.LatLng(20.99861496637506, 105.85524747787383),
-          zoom: 15,
-        };
-        const mapProp2 = {
-          center: new google.maps.LatLng(21.99861496637506, 107.85524747787383),
-          zoom: 15,
-        };
-        const map = new google.maps.Map(
-          document.getElementById("googleMap"),
-          mapProp1,
-          mapProp2
-        );
-      }
-    </script>
+</head>
+<body>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmRAp1Vw0nUZIuwShewL3NHEu_MO52Wc8&callback=myMap"></script>
-  </body>
+
+<section class="main">
+    <div class="above-btn">
+        <div class="search">
+            <input id="" name="" placeholder="Tìm kiếm" type="text">
+        </div>
+        <div class="control-btn">
+            <button class="update_btn" id="update_btn">UPDATE</button>
+        </div>
+    </div>
+    <div id="googleMap"></div>
+    <div>
+
+        <div id="info">
+            <div class="total box ">
+                <div class="number" id="totalNum">0</div>
+                <br/>
+                <div class="text">Tất cả thiết bị</div>
+            </div>
+            <div class="box heart">
+                <canvas class="chart" height="400" id="myChart" style="display: none;" width="400"></canvas>
+                <div id="my">
+                    <div class="number" id="heart">0 BPM</div>
+                    <br/>
+                    <div class="text">Nhịp tim</div>
+                </div>
+            </div>
+            <div class="box heat">
+                <canvas class="chart" height="400" id="tempChart" style="display: none;" width="400"></canvas>
+                <div id="temp">
+                    <div class="number" id="MAX30100">0 °C</div>
+                    <br/>
+                    <div class="text">Cảm biến thân nhiệt</div>
+                </div>
+            </div>
+            <div class="box C0">
+                <canvas class="chart" height="400" id="COChart" style="display: none;" width="400"></canvas>
+                <div id="co2">
+                    <div class="number" id="CO">0</div>
+                    <br/>
+                    <div class="text">Chỉ số cảm biến C0</div>
+                </div>
+            </div>
+            <div class="box SPO2">
+                <canvas class="chart" height="400" id="spoChart" style="display: none;" width="400"></canvas>
+                <div id="spo">
+                    <div class="number" id="SPO2">0 %</div>
+                    <br/>
+                    <div class="text">Chỉ số SPO2</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<!--    <script src="socket.io.js"></script>-->
+<script src="/socket.io/socket.io.js"></script>
+<!--    socket -->
+<script>
+    const totalNum = document.getElementById("totalNum");
+    //cac chi so co ban
+    const heart = document.getElementById('heart');
+    const MAX30100 = document.getElementById('MAX30100');
+    const CO = document.getElementById('CO');
+    const SPO2 = document.getElementById('SPO2');
+    const update_btn = document.getElementById('update_btn');
+    //chart
+    const myChart1 = document.getElementById('my');
+    const tempChart1 = document.getElementById('temp');
+    const coChart1 = document.getElementById('CO');
+    const spoChart1 = document.getElementById('spo');
+    let LAT, LNG;
+
+    const socket = io();
+
+    //cap nhat toan bo thong tin
+    update_btn.addEventListener('click', () => {
+        socket.emit('UPDATE', ' update')
+    })
+    //cap nhat so luong thiet bi ket noi
+    socket.on("totalDevice", (data) => {
+        totalNum.innerText = `${data}`;
+    });
+    //chi so nhip tim
+    socket.on("NHIP_TIM", (data) => {
+        heart.innerText = `${data.message} BPM`;
+        addData(myChart, data.message);
+        if (myChart.data.datasets[0].data.length > 30) removeData(myChart);
+    })
+    //cam bien than nhiet
+    socket.on('NHIET_DO', (data) => {
+        MAX30100.innerText = `${data.message} °C`;
+        addData(tempChart, data.message);
+        if (tempChart.data.datasets[0].data.length > 30) removeData(tempChart);
+    })
+    //cam bien CO
+    socket.on('CO', (data) => {
+        CO.innerText = data;
+        addData(COChart, data.message);
+        if (COChart.data.datasets[0].data.length > 30) removeData(COChart);
+    })
+    //chi so SPO2
+    socket.on('OXY', (data) => {
+        SPO2.innerText = `${data.message} %`;
+        addData(spoChart, data.message);
+        if (spoChart.data.datasets[0].data.length > 30) removeData(spoChart);
+    })
+    //kinh do
+    socket.on('LNG', (data) => {
+        LNG = data.message;
+    })
+    socket.on('LAT', (data) => {
+        LAT = data.message;
+    })
+
+</script>
+<!-- google map   -->
+<script>
+    function myMap() {
+        const mapProp1 = {
+            center: new google.maps.LatLng(20.99861496637506, 105.85524747787383),
+            zoom: 15,
+        };
+        if (LNG !== 0 && LAT !== 0) {
+            mapProp1.center = new google.maps.LatLng(LAT, LNG)
+        }
+        // const mapProp2 = {
+        //     center: new google.maps.LatLng(21.99861496637506, 107.85524747787383),
+        //     zoom: 15,
+        // };
+        const map = new google.maps.Map(
+            document.getElementById("googleMap"),
+            mapProp1,
+            // mapProp2
+        );
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmRAp1Vw0nUZIuwShewL3NHEu_MO52Wc8&callback=myMap"></script>
+<!--animation -->
+<script>
+    const Goup = [
+        {transform: 'translateY(300px)'},
+        {transform: 'translateY(00px)'}
+    ];
+    const Gouptiming = {
+        duration: 1000,
+        iterations: 1
+    }
+
+    myChart1.addEventListener('click', () => {
+        my1.animate(Goup, Gouptiming)
+    });
+    tempChart1.addEventListener('click', () => {
+        temp1.animate(Goup, Gouptiming)
+    });
+    coChart1.addEventListener('click', () => {
+        co1.animate(Goup, Gouptiming)
+    });
+    spoChart1.addEventListener('click', () => {
+        spo1.animate(Goup, Gouptiming)
+    });
+
+    const my1 = document.getElementById('myChart')
+    myChart1.addEventListener("click", () => {
+        if (my1.style.display === 'none') {
+            my1.style.display = 'block';
+            temp1.style.display = 'none';
+            co1.style.display = 'none';
+            spo1.style.display = 'none'
+        } else {
+            my1.style.display = 'none';
+        }
+    });
+    const temp1 = document.getElementById('tempChart');
+    tempChart1.addEventListener("click", () => {
+        if (temp1.style.display === 'none') {
+            temp1.style.display = 'block';
+            co1.style.display = 'none';
+            spo1.style.display = 'none';
+            my1.style.display = 'none';
+        } else {
+            temp1.style.display = 'none';
+        }
+    });
+    const co1 = document.getElementById('COChart');
+    coChart1.addEventListener("click", () => {
+        if (co1.style.display === 'none') {
+            co1.style.display = 'block';
+            temp1.style.display = 'none';
+            spo1.style.display = 'none';
+            my1.style.display = 'none';
+        } else {
+            co1.style.display = 'none';
+        }
+    });
+    const spo1 = document.getElementById('spoChart');
+    spoChart1.addEventListener("click", () => {
+        if (spo1.style.display === 'none') {
+            spo1.style.display = 'block';
+            temp1.style.display = 'none';
+            co1.style.display = 'none';
+            my1.style.display = 'none';
+        } else {
+            spo1.style.display = 'none';
+        }
+    });
+</script>
+
+<!--  chart data -->
+<script>
+    const my = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(my, {
+        type: 'line',
+        data: {
+            labels: [60, 58, 56, 54, 52, 50, 48, 46, 44, 42, 40, 38, 36, 34, 32, 30, 28, 26, 24, 22, 20, 18, 16, 14, 12, 10, 8, 6, 4, 2, 0],
+            datasets: [{
+                label: 'Nhip Tim (bpm)',
+                data: [],
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }]
+        },
+        options: {
+            responsive: false
+        }
+    });
+    const temp = document.getElementById('tempChart').getContext('2d');
+    const tempChart = new Chart(temp, {
+        type: 'line',
+        data: {
+            labels: [60, 58, 56, 54, 52, 50, 48, 46, 44, 42, 40, 38, 36, 34, 32, 30, 28, 26, 24, 22, 20, 18, 16, 14, 12, 10, 8, 6, 4, 2, 0],
+            datasets: [{
+                label: 'Than nhiet (do C)',
+                data: [],
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }]
+        },
+        options: {
+            responsive: false
+        }
+    });
+    const spo = document.getElementById('spoChart').getContext('2d');
+    const spoChart = new Chart(spo, {
+        type: 'line',
+        data: {
+            labels: [60, 58, 56, 54, 52, 50, 48, 46, 44, 42, 40, 38, 36, 34, 32, 30, 28, 26, 24, 22, 20, 18, 16, 14, 12, 10, 8, 6, 4, 2, 0],
+            datasets: [{
+                label: 'Oxy (%)',
+                data: [],
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }]
+        },
+        options: {
+            responsive: false
+        }
+    });
+    const co = document.getElementById('COChart').getContext('2d');
+    const COChart = new Chart(co, {
+        type: 'line',
+        data: {
+            labels: [60, 58, 56, 54, 52, 50, 48, 46, 44, 42, 40, 38, 36, 34, 32, 30, 28, 26, 24, 22, 20, 18, 16, 14, 12, 10, 8, 6, 4, 2, 0],
+            datasets: [{
+                label: 'CO ',
+                data: [],
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }]
+        },
+        options: {
+            responsive: false
+        }
+    });
+</script>
+<!--update chart-->
+<script>
+    function addData(chart, data) {
+        // chart.data.labels.push(label);
+        chart.data.datasets.forEach((dataset) => {
+            dataset.data.push(data);
+        });
+        chart.update();
+    }
+
+    function removeData(chart) {
+        // chart.data.labels.pop();
+        chart.data.datasets.forEach((dataset) => {
+            dataset.data.shift();
+        });
+        chart.update();
+    }
+</script>
+</body>
 </html>

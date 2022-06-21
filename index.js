@@ -1,27 +1,30 @@
 const PORT = 3434;
-const express =require('express')
+const express = require('express')
 const app = express();
 const http = require('http').createServer(app)
-// const server = app.listen(PORT);
-const socketIo = require('socket.io')
+const socketIo = require('socket.io')   //phai dung phien ban 1.7.3: <script src="/socket.io/socket.io.js"></script>
 const ip = require('ip');
 
 app.use(express.static(__dirname));
 app.use(express.static("public"));
 
-// let app = http.createServer();
-let io = socketIo(http);
+let io = socketIo(http)
+
+
+http.listen(PORT);
+console.log("Server nodejs chay tai dia chi: " + ip.address() + ":" + PORT)
+// app.listen(PORT, () => {
+//     console.log("Server nodejs chay tai dia chi: " + ip.address() + ":" + PORT)
+// })
 
 app.get("/", (req, res) => {
     res.sendFile(__dirname + '/public/neck.html');
 })
-// app.listen(PORT);
-http.listen(PORT)
-console.log("Server nodejs chay tai dia chi: " + ip.address() + ":" + PORT)
+
 
 /**
  * phan tich du lieu nhan duoc
- * @param jsonData	raw data
+ * @param jsonData    raw data
  * @returns {null|any} data
  */
 function parseJson(jsonData) {
@@ -39,82 +42,66 @@ const clients = []; //danh sach client
  * @param socket
  * @param data
  */
-function broadcast(socket, data) {
+function broadcast(socket, event, data) {
     for (let i = 0; i < clients.length; i++) {
         if (clients[i] !== socket) {
-            clients[i].send(data);
+            clients[i].emit(event, data);
         }
     }
 }
 
 //Khi có mệt kết nối được tạo giữa Socket Client và Socket Server
-io.on('connection', function(socket) {
-    console.log("Connected");
+io.on('connection', function (socket) {
+    console.log(`${socket} Connected`);
     clients.push(socket);   //them client vao danh sach client dang ket noi
-
     io.sockets.emit('totalDevice', clients.length); //cap nhat so luong client
 
-    let led = true
-    const interval1 = setInterval(function() {
-        //đảo trạng thái của mảng led, nhap nhay led
-        led = !led;
-        let json = {
-            "led": led
-        }
-        socket.emit('LED', json) //Gửi lệnh LED với các tham số của của chuỗi JSON
-    }, 5000)//5000ms
-
     /*event handler cho esp client*/
-    //led status, cai nay co the bo di
-    socket.on('LED_STATUS', function(message) {
-        broadcast(socket, message); //gui lai thong tin ve cho web client
-        console.log("LED: ", message.message);  //log
-    });
-    //mq2
-    socket.on('MQ2', (message) => {
-        broadcast(socket, message); //gui lai thong tin ve cho web client
-        console.log("MQ2: ", message.message)
-    })
-    //button    //cai nay cung co the bo di
-    let pressed = 0;
-    socket.on('BTN', (data)=> {
-        pressed ++;
-        console.log("Pressed: ", pressed);
-        broadcast(socket, `${pressed}`); //gui lai thong tin ve cho web client
-        console.log(data.message)
-    })
-    //HCSR501
-    socket.on('HCSR501', (message) => {
-        broadcast(socket, message); //gui lai thong tin ve cho web client
-        console.log(message.message)
-    })
-    //cam bien than nhiet
-    socket.on('MAX30100', (message) => {
-        broadcast(socket, message); //gui lai thong tin ve cho web client
-        console.log(message.message);
-    })
     //cam bien C0
     socket.on('CO', (message) => {
-        broadcast(socket, message); //gui lai thong tin ve cho web client
-        console.log(message.message);
+        broadcast(socket, 'CO', message); //gui lai thong tin ve cho web client
+        console.log(`cam bien CO: ${message.message}`);
     })
-    //SPO2
-    socket.on('SP02', (message) => {
-        broadcast(socket, message); //gui lai thong tin ve cho web client
-        console.log(message.message);
+    //OXY
+    socket.on('OXY', (message) => {
+        broadcast(socket, 'OXY', message); //gui lai thong tin ve cho web client
+        console.log(`chi so OXY ${message.message}`);
+    })
+    //cam bien nhip tim
+    socket.on('NHIP_TIM', (message) => {
+        broadcast(socket, 'NHIP_TIM', message);
+        console.log(`heart rate: ${message.message}`);
+    })
+    //cam bien nhiet do
+    socket.on('NHIET_DO', (message) => {
+        broadcast(socket, 'NHIET_DO', message);
+        console.log(`nhiet do: ${message.message}`);
+    })
+    //kinh do
+    socket.on('LNG', (message)=> {
+        broadcast(socket, 'LNG', message);
+        console.log(`Kinh do: ${message.message}`);
+    })
+    //vi do
+    socket.on('LAT', (message)=> {
+        broadcast(socket, 'LAT', message);
+        console.log(`Vi do: ${message.message}`);
     })
 
     /*event handler cho web client*/
-    socket.on('msg', function (data) {
-        console.log(data);
-        broadcast(socket, data);
-    });
+    socket.on('UPDATE', (data) => {
+        console.log('update')
+        broadcast(socket, 'UPDATE', data)
+        io.sockets.emit('MAX30100', Math.floor(Math.random() * 2 + 37))
+    })
+
+    /*disconnect event*/
     socket.on('disconnect', function (data) {
         let index = clients.indexOf(socket);
-        clients.splice(index,1);    //xoa client mat ket noi di
+        clients.splice(index, 1);    //xoa client mat ket noi di
         console.log("a client disconnected");
         io.sockets.emit('totalDevice', clients.length);
-        clearInterval(interval1)
+        // clearInterval(interval1)
     });
 });
 
